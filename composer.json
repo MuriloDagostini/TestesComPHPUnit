@@ -1,0 +1,14 @@
+{
+    "config" : {
+        "bin-dir" : "bin/"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "AulaTestes" : "src/",
+            "Formulario" : "src/"
+        }
+    },
+    "require" : {
+        "phpunit/phpunit" : "5.0.0"
+    }
+}
