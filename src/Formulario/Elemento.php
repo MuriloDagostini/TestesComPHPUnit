@@ -6,7 +6,7 @@ abstract class Elemento{
 
     protected $html;
 
-    public function retornaHTML(){
+    public function getHTML(){
         return $this->html;
     }
 

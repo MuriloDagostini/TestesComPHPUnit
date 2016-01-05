@@ -2,20 +2,11 @@
 
 namespace Formulario;
 
-use Formulario\Elementos\Text;
-
 class FormularioTest extends \PHPUnit_Framework_TestCase
 {
-    public function testVerificaTipoClasse(){
-        $this->assertInstanceOf("Formulario\Formulario",new Formulario('teste','/'));
-    }
-
-    public function testVerificaAtributoConstrutor(){
-        $this->assertObjectHasAttribute('html',new Formulario('teste','/'));
-    }
 
     public function construtorProvider(){
-        $objeto = new Text('Nome','nome');
+        $objeto = new \ArrayObject();
 
         return [
             [5,9],
@@ -24,11 +15,20 @@ class FormularioTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testVerificaTipoClasse(){
+        $this->assertInstanceOf('Formulario\Formulario',new Formulario('teste','/'));
+    }
+
+    public function testVerificaAtributoConstrutor(){
+        $this->assertObjectHasAttribute('html',new Formulario('teste','/'));
+    }
+
     /**
      * @dataProvider construtorProvider
      * @expectedException \InvalidArgumentException
      */
-    public function testVerificaArgumentosConstrutor($a,$b){
+    public function testVerificaArgumentosConstrutor($a,$b)
+    {
         $formulario = new Formulario($a,$b);
     }
 
@@ -40,17 +40,15 @@ class FormularioTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('fim',$html['form']);
     }
 
-    public function testVerificaChaveElemento(){
+    /*
+     * Teste função addElemento com mock da classe Text
+     */
+    public function testVerificaAddElemento(){
+        $InputText = $this->getMock('\Formulario\Elementos\Text',array(),array("nome","Nome"));
         $formulario = new Formulario('teste','/');
-        $formulario->addElemento(new Text('nome','Nome'));
+        $formulario->addElemento($InputText);
         $html = $formulario->getHTML();
         $this->assertArrayHasKey('elemento',$html);
     }
 
-    public function testVerificaSeElementoEString(){
-        $formulario = new Formulario('teste','/');
-        $formulario->addElemento(new Text('nome','Nome'));
-        $html = $formulario->getHTML();
-        $this->assertContainsOnly('string',$html['elemento']);
-    }
 }
